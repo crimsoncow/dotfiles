@@ -1,0 +1,79 @@
+[user]
+	name = xyz
+	email = xyz
+
+[core]
+	editor = vim
+
+[color]
+	ui = auto
+
+[color.diff]
+	old = yellow bold
+	new = cyan bold
+	func = green ul
+	frag = green ul bold
+
+[push]
+	default = current
+
+[pull]
+	default = tracking
+
+[diff]
+	tool = bcompare
+
+[difftool "bcompare"]
+	cmd = bcompare $LOCAL $REMOTE
+	prompt = false
+
+[difftool "vimdiff"]
+	cmd = vimdiff $LOCAL $REMOTE
+	prompt = false
+
+[merge]
+	tool = bcompare
+
+[mergetool "diffmerge"]
+	cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
+	prompt = false
+
+[mergetool "bcompare"]
+	cmd = bcompare $LOCAL $REMOTE $BASE $MERGED
+	prompt = false
+	trustExitCode = true
+
+[alias]
+	dc = diff --cached
+	dt = difftool -y --ignore-submodules -M
+	dv = difftool -t vimdiff -y
+	dtc = difftool -y --cached --ignore-submodules -M
+	dcv = difftool -t vimdiff -y --cached
+	mt = mergetool -y
+	uno = status -uno
+	diffc = !sh -c 'git difftool -y $0^..$0'
+	st = status -sb
+	stu = status -sb -uno
+	ll = log --name-status --decorate --abbrev-commit --graph
+	ls = log --graph --pretty='%h %C(bold cyan)[%an] %C(bold red)(%ar)%C(reset) %C(yellow)%s %C(green)%d'
+	hist = log -n25 --graph --pretty='%h %C(bold cyan)[%an] %C(bold red)(%ar)%C(reset) %C(yellow)%s %C(green)%d'
+	sl = stash list
+	w = !git branch | grep '*'
+	where = !git w
+	b = branch
+	rb = for-each-ref --sort=-committerdate refs/remotes/origin/ --format='%(refname:short)%09%(committerdate)' --count 30
+	pl = pull --ff-only
+	lot = "!~/dev/gituniq.py -lt"
+	lob = "!~/dev/gituniq.py -lb"
+	rot = "!~/dev/gituniq.py -rt"
+	rob = "!~/dev/gituniq.py -rb"
+	tidyup = "!git fetch; git remote prune origin; git prune; git gc; git lob; git lot"
+	aml = difftool -y --ignore-submodules -M HEAD^!
+	rbc = rebase --continue
+	cma = commit --amend
+	alias = config --get-regexp alias
+	aup = add -u -p
+	lbs = "!git for-each-ref --sort=-committerdate --format='%(refname:short)|%(committerdate)' refs/heads | column -s '|' -t"
+	rbs = !git for-each-ref --sort=-committerdate refs/remotes/origin/ --format='%(refname:short)|%(committerdate:relative)%09%(authorname)' | column -s '|' -t
+	lmerged = branch --merged origin/master
+	rmerged = branch -r --merged origin/master
